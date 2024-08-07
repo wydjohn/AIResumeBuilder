@@ -1,1 +1,1 @@
-# AIResumeBuilder
+AIResumeBuilder is a Flask-based web application designed to assist users in generating professional resumes effortlessly. By leveraging artificial intelligence, it streamlines the resume creation process, enabling users to input their details and receive a tailored, job-ready resume. This repository contains the Python code to initialize the Flask application, establish routes, and execute the server, making it a crucial component for running the AIResumeBuilder service.
