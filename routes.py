@@ -47,5 +47,34 @@ def get_env_var():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/submit_resume', methods=['POST'])
+def submit_resume():
+    try:
+        data = request.get_json()
+        if not data:
+            raise ValueError("No resume data provided.")
+
+        # Format and save the resume data
+        resume_filename = "resume_mockup.txt"
+        with open(resume_filename, "w") as file:
+            file.write("Resume\n\n")
+            file.write(f"Name: {data.get('name', 'N/A')}\n")
+            file.write(f"Email: {data.get('email', 'N/A')}\n\n")
+            file.write("Education:\n")
+            for edu in data.get("education", []):
+                file.write(f"- {edu}\n")
+            file.write("\nWork Experience:\n")
+            for job in data.get("work_experience", []):
+                file.write(f"- {job}\n")
+            file.write("\nSkills:\n")
+            for skill in data.get("skills", []):
+                file.write(f"- {skill}\n")
+
+        return jsonify({"message": "Resume successfully submitted and saved.", "file": resume_filename}), 201
+    except ValueError as ve:
+        return jsonify({"error": str(ve)}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.getenv('PORT', 5000)))
