@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import ResumeBuilder from './ResumeBuilder';
-import TemplateSelector from './TemplateSelector';
+
+// Lazy load components
+const ResumeBuilder = lazy(() => import('./ResumeBuilder'));
+const TemplateSelector = lazy(() => import('./TemplateSelector'));
 
 class App extends React.Component {
   render() {
     return (
       <Router>
         <div>
-          <Switch>
-            <Route path="/resume-builder" component={ResumeBuilder} />
-            <Route path="/template-selector" component={TemplateSelector} />
-            <Route path="/" exact component={ResumeBuilder} />
-          </Switch>
+          {/* Use Suspense to wrap lazy-loaded components */}
+          <Suspense fallback={<div>Loading...</div>}>
+            <Switch>
+              <Route path="/resume-builder" component={ResumeBuilder} />
+              <Route path="/template-selector" component={TemplateSelector} />
+              <Route path="/" exact component={ResumeBuilder} />
+            </Switch>
+          </Suspense>
         </div>
       </Router>
     );
